@@ -123,14 +123,9 @@ class Clock extends HTMLElement {
         }
 
         function directionForAngle(angle) {
-            return [
-                Math.sin(angle),
-                -Math.cos(angle)
-            ]
+            return [Math.sin(angle), -Math.cos(angle)]
         }
     }
 }
 
-customElements.define(
-    "at-yeoman-clock",
-    Clock)
+customElements.define("at-yeoman-clock", Clock)
