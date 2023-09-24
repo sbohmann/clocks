@@ -18,7 +18,7 @@ class Clock extends HTMLElement {
         this.#canvas = document.createElement('canvas')
         this.appendChild(this.#canvas)
         window.onresize = () => this.refreshCanvas()
-        setInterval(() => this.refreshCanvas(), 10) // TODO adapting interval
+        requestAnimationFrame(() => this.refreshCanvas())
     }
 
     refreshCanvas() {
@@ -29,6 +29,8 @@ class Clock extends HTMLElement {
             this.#canvas.height = height
         }
         this.drawClock()
+        // TODO adjust time offset after drawing
+        requestAnimationFrame(() => this.refreshCanvas())
     }
 
     drawClock() {
