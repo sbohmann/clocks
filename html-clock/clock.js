@@ -42,8 +42,10 @@ class Clock extends HTMLElement {
         let centerX = width / 2
         let centerY = height / 2
 
-        let millisecondTimestamp = Date.now()
-        let millisecondOfDay = millisecondTimestamp % millisecondsPerDay
+        let currentDate = new Date()
+        let localTimestamp = currentDate.getTime() -
+            currentDate.getTimezoneOffset() * 60_000
+        let millisecondOfDay = localTimestamp % millisecondsPerDay
 
         context.clearRect(0, 0, width, height)
         drawRim()
