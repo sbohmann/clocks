@@ -13,23 +13,33 @@ const HOUR_HANDLE_END_RADIUS = 0.27
 
 class Clock extends HTMLElement {
     #canvas;
+    #animationFrameRequested = false;
 
     connectedCallback() {
         this.#canvas = document.createElement('canvas')
         this.appendChild(this.#canvas)
-        window.onresize = () => this.refreshCanvas()
-        requestAnimationFrame(() => this.refreshCanvas())
+        this.requestRefresh()
+        window.onresize = () => this.requestRefresh()
+    }
+
+    requestRefresh() {
+        if (!this.#animationFrameRequested) {
+            requestAnimationFrame(() => {
+                this.refreshCanvas()
+            })
+        }
     }
 
     refreshCanvas() {
-        let width = this.#canvas.offsetWidth * window.devicePixelRatio;
-        let height = this.#canvas.offsetHeight * window.devicePixelRatio;
+        this.#animationFrameRequested = false
+        let width = this.#canvas.offsetWidth * window.devicePixelRatio
+        let height = this.#canvas.offsetHeight * window.devicePixelRatio
         if (this.#canvas.width !== width || this.#canvas.height !== height) {
             this.#canvas.width = width
             this.#canvas.height = height
         }
         this.drawClock()
-        requestAnimationFrame(() => this.refreshCanvas())
+        this.requestRefresh()
     }
 
     drawClock() {
