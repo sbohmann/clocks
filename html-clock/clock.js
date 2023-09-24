@@ -16,14 +16,7 @@ class Clock extends HTMLElement {
 
     connectedCallback() {
         this.#canvas = document.createElement('canvas')
-        this.#canvas.onresize = (...size) => {
-            console.log(size)
-        }
-        // this.#canvas.width = size * window.devicePixelRatio
-        // this.#canvas.height = size * window.devicePixelRatio
         this.appendChild(this.#canvas)
-
-        // this.refreshCanvas()
         window.onresize = () => this.refreshCanvas()
         setInterval(() => this.refreshCanvas(), 10) // TODO adapting interval
     }
