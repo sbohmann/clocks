@@ -29,13 +29,11 @@ class Clock extends HTMLElement {
             this.#canvas.height = height
         }
         this.drawClock()
-        // TODO adjust time offset after drawing
         requestAnimationFrame(() => this.refreshCanvas())
     }
 
     drawClock() {
         let context = this.#canvas.getContext('2d')
-        // TODO hires displays
         let width = this.#canvas.width
         let height = this.#canvas.height
         let size = Math.min(width, height)
