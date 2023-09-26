@@ -4,7 +4,7 @@
      xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/"
      style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
     <g transform="matrix(1.05189,0,0,1.05189,-227.834,-227.834)">
-        <circle cx="1500" cy="1500" r="1212.11" style="fill:none;stroke:black;stroke-width:0.95px;"/>
+        <circle cx="1500" cy="1500" r="1212.11" style="fill:white;stroke:black;stroke-width:0.95px;"/>
     </g>
     <g id="Brown-Jobs" serif:id="Brown Jobs" transform="matrix(1,0,0,1,-150,-150)">
         <path d="M1500,297.902L1500,594.014"
@@ -314,9 +314,15 @@
         let minutes = (localTimestamp % 3_600_000) / 60_000
         let hours = (localTimestamp % 43_200_000) / 3_600_000
 
-        document.querySelector('#second').setAttribute('transform', 'rotate('+360*(seconds/60)+',1350,1350)')
-        document.querySelector('#minute').setAttribute('transform', 'rotate('+360*(minutes/60)+',1350,1350)')
-        document.querySelector('#hour').setAttribute('transform', 'rotate('+360*(hours/12)+',1350,1350)')
+        setAnimationsToCurrentTime()
+        setInterval(setAnimationsToCurrentTime, 1000)
+        // TODO also call when visibility changes to hidden === false
+
+        function setAnimationsToCurrentTime() {
+            document.querySelector('#second').setAttribute('transform', 'rotate('+360*(seconds/60)+',1350,1350)')
+            document.querySelector('#minute').setAttribute('transform', 'rotate('+360*(minutes/60)+',1350,1350)')
+            document.querySelector('#hour').setAttribute('transform', 'rotate('+360*(hours/12)+',1350,1350)')
+        }
     ]]>
     </script>
 </svg>
