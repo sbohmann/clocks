@@ -314,7 +314,7 @@
         let minutes = (localTimestamp % 3_600_000) / 60_000
         let hours = (localTimestamp % 43_200_000) / 3_600_000
 
-        setAnimationsToCurrentTime()
+<!--        setAnimationsToCurrentTime()-->
         setInterval(setAnimationsToCurrentTime, 1000)
         // TODO also call when visibility changes to hidden === false
 
