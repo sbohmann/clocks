@@ -322,8 +322,17 @@
         }
 
         setAnimationsToCurrentTime()
-        setInterval(setAnimationsToCurrentTime, 1000)
         // TODO also call when visibility changes to hidden === false
+
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                document.pauseAnimations()
+            else {
+                setAnimationsToCurrentTime()
+        <!--        watch() ??? -->
+                document.unpauseAnimations()
+            }
+        })
     ]]>
     </script>
 </svg>
