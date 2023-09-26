@@ -325,12 +325,8 @@
         // TODO also call when visibility changes to hidden === false
 
         document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                document.pauseAnimations()
-            } else {
+            if (!document.hidden) {
                 setAnimationsToCurrentTime()
-        <!--        watch() ??? -->
-                document.unpauseAnimations()
             }
         })
     ]]>
