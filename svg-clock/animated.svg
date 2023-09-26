@@ -319,6 +319,7 @@
         // TODO also call when visibility changes to hidden === false
 
         function setAnimationsToCurrentTime() {
+            console.log("Hi!")
             document.querySelector('#second').setAttribute('transform', 'rotate('+360*(seconds/60)+',1350,1350)')
             document.querySelector('#minute').setAttribute('transform', 'rotate('+360*(minutes/60)+',1350,1350)')
             document.querySelector('#hour').setAttribute('transform', 'rotate('+360*(hours/12)+',1350,1350)')
