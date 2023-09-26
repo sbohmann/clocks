@@ -248,9 +248,11 @@
                   style="fill:none;stroke:rgb(26,18,102);stroke-width:27.08px;stroke-linecap:butt;"/>
         </g>
     </g>
-    <g id="hour" transform="matrix(1,0,0,0.734955,0,397.568)">
-        <path d="M1350,377.482L1350,1500"
-              style="fill:none;stroke:rgb(26,18,102);stroke-width:30.86px;stroke-linecap:butt;"/>
+    <g id="hour">
+        <g transform="matrix(1,0,0,0.734955,0,397.568)">
+            <path d="M1350,377.482L1350,1500"
+                  style="fill:none;stroke:rgb(26,18,102);stroke-width:30.86px;stroke-linecap:butt;"/>
+        </g>
     </g>
     <path id="minute" d="M1350,377.482L1350,1500"
           style="fill:none;stroke:rgb(26,18,102);stroke-width:27.08px;stroke-linecap:butt;"/>
@@ -312,9 +314,9 @@
         let minutes = (localTimestamp % 3_600_000) / 60_000
         let hours = (localTimestamp % 43_200_000) / 3_600_000
 
-<!--        document.querySelector('#second').setAttribute('transform', 'rotate('+360*(seconds/60)+',1350,1350)')-->
-<!--        document.querySelector('#minute').setAttribute('transform', 'rotate('+360*(minutes/60)+',1350,1350)')-->
-<!--        document.querySelector('#hour').setAttribute('transform', 'rotate('+360*(hours/12)+',1350,1350)')-->
+        document.querySelector('#second').setAttribute('transform', 'rotate('+360*(seconds/60)+',1350,1350)')
+        document.querySelector('#minute').setAttribute('transform', 'rotate('+360*(minutes/60)+',1350,1350)')
+        document.querySelector('#hour').setAttribute('transform', 'rotate('+360*(hours/12)+',1350,1350)')
     ]]>
     </script>
 </svg>
