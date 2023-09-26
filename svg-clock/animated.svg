@@ -315,14 +315,16 @@
         let hours = (localTimestamp % 43_200_000) / 3_600_000
 
 <!--        setAnimationsToCurrentTime()-->
-        setInterval(setAnimationsToCurrentTime, 1000)
+        setTimeout(setAnimationsToCurrentTime, 1000)
         // TODO also call when visibility changes to hidden === false
 
+        let hourOffset = 0
         function setAnimationsToCurrentTime() {
-            console.log("Hi!")
+            hours += hourOffset++
             document.querySelector('#second').setAttribute('transform', 'rotate('+360*(seconds/60)+',1350,1350)')
             document.querySelector('#minute').setAttribute('transform', 'rotate('+360*(minutes/60)+',1350,1350)')
             document.querySelector('#hour').setAttribute('transform', 'rotate('+360*(hours/12)+',1350,1350)')
+            setTimeout(setAnimationsToCurrentTime, 1000)
         }
     ]]>
     </script>
