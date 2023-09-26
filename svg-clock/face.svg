@@ -186,4 +186,9 @@
             <path d="M1500,297.902L1500,445.958" style="fill:none;stroke:rgb(26,18,102);stroke-width:27.08px;stroke-linecap:butt;"/>
         </g>
     </g>
+    <g id="hour" transform="matrix(1,0,0,0.734955,0,397.568)">
+        <path d="M1350,377.482L1350,1500" style="fill:none;stroke:rgb(26,18,102);stroke-width:30.86px;stroke-linecap:butt;"/>
+    </g>
+    <path id="minute" d="M1350,377.482L1350,1500" style="fill:none;stroke:rgb(26,18,102);stroke-width:27.08px;stroke-linecap:butt;"/>
+    <path id="second" d="M1350,377.482L1350,1500" style="fill:none;stroke:rgb(211,4,73);stroke-width:14.58px;stroke-linecap:butt;"/>
 </svg>
