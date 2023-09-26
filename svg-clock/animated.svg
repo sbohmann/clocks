@@ -305,19 +305,16 @@
     </defs>
     <script type="text/javascript">
     <![CDATA[
-        // TODO fix by deriving all from ms timestamp
-        var date = new Date()
-        var seconds = date.getSeconds()
-        var minutes = date.getMinutes()
-        var hours = date.getHours()
-        hours = (hours > 12) ? hours - 12 : hours;
+        let currentDate = new Date()
+        let localTimestamp = currentDate.getTime() -
+            currentDate.getTimezoneOffset() * 60_000
+        let seconds = (localTimestamp % 60_000) / 1000
+        let minutes = (localTimestamp % 3_600_000) / 60_000
+        let hours = (localTimestamp % 43_200_000) / 3_600_000
 
-        minutes = (minutes * 60) + seconds;
-        hours = (hours * 3600) + minutes;
-
-        document.querySelector('.iconic-clock-second-hand').setAttribute('transform', 'rotate('+360*(seconds/60)+',192,192)');
-        document.querySelector('.iconic-clock-minute-hand').setAttribute('transform', 'rotate('+360*(minutes/3600)+',192,192)');
-        document.querySelector('.iconic-clock-hour-hand').setAttribute('transform', 'rotate('+360*(hours/43200)+',192,192)');
+        document.querySelector('#second').setAttribute('transform', 'rotate('+360*(seconds/60)+',1350,1350)')
+        document.querySelector('#minute').setAttribute('transform', 'rotate('+360*(minutes/60)+',1350,1350)')
+        document.querySelector('#hour').setAttribute('transform', 'rotate('+360*(hours/12)+',1350,1350)')
     ]]>
     </script>
 </svg>
