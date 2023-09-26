@@ -324,15 +324,15 @@
         setAnimationsToCurrentTime()
         // TODO also call when visibility changes to hidden === false
 
-<!--        document.addEventListener('visibilitychange', () => {-->
-<!--            if (document.hidden) {-->
-<!--                document.pauseAnimations()-->
-<!--            } else {-->
-<!--                setAnimationsToCurrentTime()-->
-<!--        &lt;!&ndash;        watch() ??? &ndash;&gt;-->
-<!--                document.unpauseAnimations()-->
-<!--            }-->
-<!--        })-->
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                document.pauseAnimations()
+            } else {
+                setAnimationsToCurrentTime()
+        <!--        watch() ??? -->
+                document.unpauseAnimations()
+            }
+        })
     ]]>
     </script>
 </svg>
