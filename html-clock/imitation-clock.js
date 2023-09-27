@@ -77,7 +77,7 @@ class Clock extends HTMLElement {
                     : '#1A1266'
                 context.lineWidth = tickIsLong
                     ? size / 2700 * 42
-                    : size / 2700 * 25
+                    : size / 2700 * 27
                 drawRadialLineForPartOfCircle(
                     n / numberOfTicks,
                     tickIsLong
@@ -90,7 +90,7 @@ class Clock extends HTMLElement {
         function drawHourHand() {
             let hourOfHalfDay = millisecondOfDay / 1000 / 60 / 60 / 12
             context.strokeStyle = '#1A1266'
-            context.lineWidth = size / 2700 * 25
+            context.lineWidth = size / 2700 * 27
             drawRadialLineForPartOfCircle(
                 hourOfHalfDay % 12,
                 HOUR_HANDLE_START_RADIUS,
@@ -100,7 +100,7 @@ class Clock extends HTMLElement {
         function drawMinuteHand() {
             let minuteOfHour = millisecondOfDay / 1000 / 60 / 60
             context.strokeStyle = '#1A1266'
-            context.lineWidth = size / 2700 * 25
+            context.lineWidth = size / 2700 * 27
             drawRadialLineForPartOfCircle(
                 minuteOfHour % 60,
                 MINUTE_HANDLE_START_RADIUS,
