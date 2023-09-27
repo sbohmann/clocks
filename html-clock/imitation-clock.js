@@ -5,9 +5,9 @@ const SHORT_TICK_START_RADIUS = 0.405
 const LONG_TICK_START_RADIUS = 0.349
 const TICK_END_RADIUS = 0.4618
 const SECOND_HANDLE_START_RADIUS = -0.07
-const SECOND_HANDLE_END_RADIUS = 0.37
+const SECOND_HANDLE_END_RADIUS = 0.375
 const MINUTE_HANDLE_START_RADIUS = -0.07
-const MINUTE_HANDLE_END_RADIUS = 0.37
+const MINUTE_HANDLE_END_RADIUS = 0.375
 const HOUR_HANDLE_START_RADIUS = -0.07
 const HOUR_HANDLE_END_RADIUS = 0.27
 
@@ -76,8 +76,8 @@ class Clock extends HTMLElement {
                     ? '#DBBA73'
                     : '#1A1266'
                 context.lineWidth = tickIsLong
-                    ? size / 2700 * 40
-                    : size / 2700 * 30
+                    ? size / 2700 * 42
+                    : size / 2700 * 25
                 drawRadialLineForPartOfCircle(
                     n / numberOfTicks,
                     tickIsLong
@@ -90,7 +90,7 @@ class Clock extends HTMLElement {
         function drawHourHand() {
             let hourOfHalfDay = millisecondOfDay / 1000 / 60 / 60 / 12
             context.strokeStyle = '#1A1266'
-            context.lineWidth = size / 2700 * 30
+            context.lineWidth = size / 2700 * 25
             drawRadialLineForPartOfCircle(
                 hourOfHalfDay % 12,
                 HOUR_HANDLE_START_RADIUS,
@@ -100,7 +100,7 @@ class Clock extends HTMLElement {
         function drawMinuteHand() {
             let minuteOfHour = millisecondOfDay / 1000 / 60 / 60
             context.strokeStyle = '#1A1266'
-            context.lineWidth = size / 2700 * 30
+            context.lineWidth = size / 2700 * 25
             drawRadialLineForPartOfCircle(
                 minuteOfHour % 60,
                 MINUTE_HANDLE_START_RADIUS,
