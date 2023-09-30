@@ -94,13 +94,13 @@ void drawLine(int x1, int y1, int x2, int y2, void (*drawDot)(int x, int y)) {
 }
 
 void drawLineAtAngle(int x, int y, int64_t angle, int radius, void (*drawDot)(int x, int y)) {
-    int xEnd = x + (int)(2 * radius * sin(2 * M_PI * angle / ONE));
-    int yEnd = y + (int)(radius * -cos(2 * M_PI * angle / ONE));
+    int xEnd = x + (int)(2 * radius * sin(2 * M_PI * angle / ONE) + 0.5);
+    int yEnd = y + (int)(radius * -cos(2 * M_PI * angle / ONE) + 0.5);
     drawLine(x, y, xEnd, yEnd, drawDot);
 }
 
 void drawDotAtAngle(int x, int y, int64_t angle, int radius, void (*drawDot)(int x, int y)) {
-    int xEnd = x + (int)(2 * radius * sin(2 * M_PI * angle / ONE));
-    int yEnd = y + (int)(radius * -cos(2 * M_PI * angle / ONE));
+    int xEnd = x + (int)(2 * radius * sin(2 * M_PI * angle / ONE) + 0.5);
+    int yEnd = y + (int)(radius * -cos(2 * M_PI * angle / ONE) + 0.5);
     drawDot(xEnd, yEnd);
 }
