@@ -2,11 +2,15 @@
 #include <unistd.h>
 #include <sys/time.h>
 #include <inttypes.h>
+#include <math.h>
 
+// Definition of implicit fixed point type
 // This implies that microseconds are seconds in this fixed pint format
 const int64_t ONE = 1000 * 1000;
 
-void drawLine(int x1, int y1, int x2, int y2, void (*drawDot)(x, y));
+void drawHandDot(int x, int y);
+
+void drawLine(int x1, int y1, int x2, int y2, void (*drawDot)(int x, int y));
 
 int main()
 {
@@ -48,6 +52,9 @@ int main()
         mvaddch(0, secondPosition, 'S');
         mvaddch(1, minutePosition, 'M');
         mvaddch(2, hourPosition, 'H');
+        drawLine(0, LINES - 1, secondPosition, 0, drawHandDot);
+        drawLine(0, LINES - 1, minutePosition, 0, drawHandDot);
+        drawLine(0, LINES - 1, hourPosition, 0, drawHandDot);
         mvaddch(LINES - 1, 0, '-');
 //         mvaddstr(10, 0, buffer);
         refresh();
@@ -57,7 +64,11 @@ int main()
     endwin();
 }
 
-void drawLine(int x1, int y1, int x2, int y2, void (*drawDot)(x, y)) {
+void drawHandDot(int x, int y) {
+    mvaddch(y, x, '*');
+}
+
+void drawLine(int x1, int y1, int x2, int y2, void (*drawDot)(int x, int y)) {
     int dx = abs(x2 - x1);
     int dy = abs(y2 - y1);
     if (dx > dy) {
