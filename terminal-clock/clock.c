@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <sys/time.h>
 #include <inttypes.h>
+#include <stdlib.h>
 #include <math.h>
 
 // Definition of implicit fixed point type
@@ -12,6 +13,8 @@ void drawHandDot(int x, int y);
 
 void drawLine(int x1, int y1, int x2, int y2, void (*drawDot)(int x, int y));
 
+void drawLineAtAngle(int x, int y, int64_t angle, int radius, void (*drawDot)(int x, int y));
+
 int main()
 {
     initscr();
@@ -19,6 +22,8 @@ int main()
     noecho();
 
     while (1) {
+        int size = (COLS / 2 < LINES ? COLS / 2 : LINES) * 9 / 20;
+
         struct timeval timeval;
         struct timezone timezone;
         gettimeofday(&timeval, &timezone);
@@ -35,28 +40,11 @@ int main()
         int64_t minute_of_hour = second_of_day % (60 * 60 * ONE) / 60 / 60;
         int64_t hour_of_half_day = second_of_day % (12 * 60 * 60 * ONE) / 12 / 60 / 60;
 
-        int64_t secondPosition = second_of_minute * COLS / ONE;
-        int64_t minutePosition = minute_of_hour * COLS / ONE;
-        int64_t hourPosition = hour_of_half_day * COLS / ONE;
-
-//         char buffer[2000];
-//         sprintf(buffer, "second_of_day: %" PRId64 ", hour_of_half_day: %" PRId64 "\nhour: %" PRId64 ", minute: %" PRId64 ", second: %" PRId64 "\ntz_minuteswest: %d, tz_dsttime: %d\n",
-//             second_of_day, hour_of_half_day,
-//             hour_of_half_day * 1200 / ONE,
-//             minute_of_hour * 6000 / ONE,
-//             second_of_minute * 6000 / ONE,
-//             tz_minuteswest,
-//             tz_dsttime);
-
         clear();
-        mvaddch(0, secondPosition, 'S');
-        mvaddch(1, minutePosition, 'M');
-        mvaddch(2, hourPosition, 'H');
-        drawLine(0, LINES - 1, secondPosition, 0, drawHandDot);
-        drawLine(0, LINES - 1, minutePosition, 0, drawHandDot);
-        drawLine(0, LINES - 1, hourPosition, 0, drawHandDot);
+        drawLineAtAngle(COLS / 2, LINES / 2, second_of_minute, size, drawHandDot);
+        drawLineAtAngle(COLS / 2, LINES / 2, minute_of_hour, size, drawHandDot);
+        drawLineAtAngle(COLS / 2, LINES / 2, hour_of_half_day, size * 2 / 3, drawHandDot);
         mvaddch(LINES - 1, 0, '-');
-//         mvaddstr(10, 0, buffer);
         refresh();
         usleep(100000);
     }
@@ -68,24 +56,38 @@ void drawHandDot(int x, int y) {
     mvaddch(y, x, '*');
 }
 
+int sign(int value) {
+    return value < 0
+        ? -1
+        : value > 0
+            ? 1
+            : 0;
+}
+
 void drawLine(int x1, int y1, int x2, int y2, void (*drawDot)(int x, int y)) {
-    int dx = abs(x2 - x1);
-    int dy = abs(y2 - y1);
+    const int dx = abs(x2 - x1);
+    const int dy = abs(y2 - y1);
+    int xDirection = sign(x2 - x1);
+    int yDirection = sign(y2 - y1);
     if (dx > dy) {
-        int xDirection = sign(x2 - x1);
         for (int xOffset = 0; xOffset <= dx; ++xOffset) {
             int x = x1 + xOffset * xDirection;
             int64_t part = xOffset * ONE / dx;
-            int y = (int)(part * dy / ONE);
+            int y = (int)(y1 + yDirection * part * dy / ONE);
             drawDot(x, y);
         }
-    } else if (dy > dx) {
-        int yDirection = sign(y2 - y1);
+    } else {
         for (int yOffset = 0; yOffset <= dy; ++yOffset) {
             int64_t part = yOffset * ONE / dy;
-            int x = (int)(part * dx / ONE);
+            int x = (int)(x1 + xDirection * part * dx / ONE);
             int y = y1 + yOffset * yDirection;
             drawDot(x, y);
         }
     }
+}
+
+void drawLineAtAngle(int x, int y, int64_t angle, int radius, void (*drawDot)(int x, int y)) {
+    int xEnd = x + (int)(2 * radius * sin(2 * M_PI * angle / ONE));
+    int yEnd = y + (int)(radius * -cos(2 * M_PI * angle / ONE));
+    drawLine(x, y, xEnd, yEnd, drawDot);
 }
