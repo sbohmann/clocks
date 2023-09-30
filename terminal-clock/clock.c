@@ -15,6 +15,8 @@ void drawLine(int x1, int y1, int x2, int y2, void (*drawDot)(int x, int y));
 
 void drawLineAtAngle(int x, int y, int64_t angle, int radius, void (*drawDot)(int x, int y));
 
+void drawDotAtAngle(int x, int y, int64_t angle, int radius, void (*drawDot)(int x, int y));
+
 int main()
 {
     initscr();
@@ -41,8 +43,13 @@ int main()
         int64_t hour_of_half_day = second_of_day % (12 * 60 * 60 * ONE) / 12 / 60 / 60;
 
         clear();
-        drawLineAtAngle(COLS / 2, LINES / 2, second_of_minute, size, drawHandDot);
-        drawLineAtAngle(COLS / 2, LINES / 2, minute_of_hour, size, drawHandDot);
+
+        for (int n = 0; n < 12; ++n) {
+            drawDotAtAngle(COLS / 2, LINES / 2, ONE * n / 12, size, drawHandDot);
+        }
+
+        drawLineAtAngle(COLS / 2, LINES / 2, second_of_minute, size * 9 / 10, drawHandDot);
+        drawLineAtAngle(COLS / 2, LINES / 2, minute_of_hour, size * 9 / 10, drawHandDot);
         drawLineAtAngle(COLS / 2, LINES / 2, hour_of_half_day, size * 2 / 3, drawHandDot);
         mvaddch(LINES - 1, 0, '-');
         refresh();
@@ -90,4 +97,10 @@ void drawLineAtAngle(int x, int y, int64_t angle, int radius, void (*drawDot)(in
     int xEnd = x + (int)(2 * radius * sin(2 * M_PI * angle / ONE));
     int yEnd = y + (int)(radius * -cos(2 * M_PI * angle / ONE));
     drawLine(x, y, xEnd, yEnd, drawDot);
+}
+
+void drawDotAtAngle(int x, int y, int64_t angle, int radius, void (*drawDot)(int x, int y)) {
+    int xEnd = x + (int)(2 * radius * sin(2 * M_PI * angle / ONE));
+    int yEnd = y + (int)(radius * -cos(2 * M_PI * angle / ONE));
+    drawDot(xEnd, yEnd);
 }
