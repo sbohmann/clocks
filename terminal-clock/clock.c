@@ -80,13 +80,13 @@ void drawLine(int x1, int y1, int x2, int y2, void (*drawDot)(int x, int y)) {
         for (int xOffset = 0; xOffset <= dx; ++xOffset) {
             int x = x1 + xOffset * xDirection;
             int64_t part = xOffset * ONE / dx;
-            int y = (int)(y1 + yDirection * part * dy / ONE);
+            int y = (int)(y1 + (yDirection * part * dy + ONE / 2) / ONE);
             drawDot(x, y);
         }
     } else {
         for (int yOffset = 0; yOffset <= dy; ++yOffset) {
             int64_t part = yOffset * ONE / dy;
-            int x = (int)(x1 + xDirection * part * dx / ONE);
+            int x = (int)(x1 + (xDirection * part * dx + ONE / 2) / ONE);
             int y = y1 + yOffset * yDirection;
             drawDot(x, y);
         }
