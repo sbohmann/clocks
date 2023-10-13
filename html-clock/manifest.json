@@ -1,0 +1,17 @@
+{
+  "background_color": "#ffffff",
+  "description": "A Clock showing local time",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "./icon.png",
+      "sizes": "200x200",
+      "type": "image/png"
+    }
+  ],
+  "name": "Clock",
+  "orientation": "portrait",
+  "short_name": "Clock",
+  "start_url": ".",
+  "theme_color": "#ffffff"
+}
