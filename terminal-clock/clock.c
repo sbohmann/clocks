@@ -65,13 +65,11 @@ int main()
         for (int n = 0; n < 12; ++n) {
             drawDotAtAngle(COLS / 2, LINES / 2, ONE * n / 12, size, drawHandDot);
         }
-        drawLineAtAngle(COLS / 2, LINES / 2, second_of_minute, size * 9 / 10, drawHandDot);
+        drawLineAtAngle(COLS / 2, LINES / 2, hour_of_half_day, size * 2 / 3, drawHandDot);
         drawLineAtAngle(COLS / 2, LINES / 2, minute_of_hour, size * 9 / 10, drawHandDot);
-        attroff(COLOR_PAIR(BLUE_ON_WHITE));
 
         attron(COLOR_PAIR(RED_ON_WHITE));
-        drawLineAtAngle(COLS / 2, LINES / 2, hour_of_half_day, size * 2 / 3, drawHandDot);
-        attroff(COLOR_PAIR(RED_ON_WHITE));
+        drawLineAtAngle(COLS / 2, LINES / 2, second_of_minute, size * 9 / 10, drawHandDot);
 
         mvaddch(LINES - 1, 0, '-');
         refresh();
