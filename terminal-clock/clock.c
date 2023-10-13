@@ -34,7 +34,7 @@ int main()
         init_pair(BLACK_ON_WHITE, COLOR_BLACK, COLOR_WHITE);
         init_pair(BLUE_ON_WHITE, COLOR_BLUE, COLOR_WHITE);
         init_pair(RED_ON_WHITE, COLOR_RED, COLOR_WHITE);
-        bkgd(COLOR_PAIR(RED_ON_WHITE));
+        bkgd(COLOR_PAIR(BLUE_ON_WHITE));
     }
 
     cbreak();
