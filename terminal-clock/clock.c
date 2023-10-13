@@ -1,4 +1,4 @@
-#include <curses.h>
+#include <ncurses.h>
 #include <unistd.h>
 #include <sys/time.h>
 #include <inttypes.h>
@@ -8,6 +8,13 @@
 // Definition of implicit fixed point type
 // This implies that microseconds are seconds in this fixed pint format
 const int64_t ONE = 1000 * 1000;
+
+const bool COLOR_ENABLED = true;
+
+enum ColorIndices {
+    BLUE_ON_WHITE,
+    RED_ON_WHITE
+};
 
 void drawHandDot(int x, int y);
 
@@ -22,6 +29,13 @@ int main()
     initscr();
     cbreak();
     noecho();
+
+    if (has_colors()) {
+        start_color();
+        init_pair(BLUE_ON_WHITE, COLOR_BLACK, COLOR_WHITE);
+        init_pair(RED_ON_WHITE, COLOR_BLACK, COLOR_WHITE);
+        bkgd(COLOR_PAIR(RED_ON_WHITE));
+    }
 
     while (1) {
         int size = (COLS / 2 < LINES ? COLS / 2 : LINES) * 9 / 20;
@@ -42,15 +56,20 @@ int main()
         int64_t minute_of_hour = second_of_day % (60 * 60 * ONE) / 60 / 60;
         int64_t hour_of_half_day = second_of_day % (12 * 60 * 60 * ONE) / 12 / 60 / 60;
 
-        clear();
+        erase();
 
+        attron(COLOR_PAIR(BLUE_ON_WHITE));
         for (int n = 0; n < 12; ++n) {
             drawDotAtAngle(COLS / 2, LINES / 2, ONE * n / 12, size, drawHandDot);
         }
-
         drawLineAtAngle(COLS / 2, LINES / 2, second_of_minute, size * 9 / 10, drawHandDot);
         drawLineAtAngle(COLS / 2, LINES / 2, minute_of_hour, size * 9 / 10, drawHandDot);
+//         attroff(COLOR_PAIR(BLUE_ON_WHITE));
+
+        attron(COLOR_PAIR(RED_ON_WHITE));
         drawLineAtAngle(COLS / 2, LINES / 2, hour_of_half_day, size * 2 / 3, drawHandDot);
+//         attroff(COLOR_PAIR(RED_ON_WHITE));
+
         mvaddch(LINES - 1, 0, '-');
         refresh();
         usleep(100000);
