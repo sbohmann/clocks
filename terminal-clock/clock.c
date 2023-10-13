@@ -12,6 +12,7 @@ const int64_t ONE = 1000 * 1000;
 const bool COLOR_ENABLED = true;
 
 enum ColorIndices {
+    BLACK_ON_WHITE,
     BLUE_ON_WHITE,
     RED_ON_WHITE
 };
@@ -27,15 +28,17 @@ void drawDotAtAngle(int x, int y, int64_t angle, int radius, void (*drawDot)(int
 int main()
 {
     initscr();
-    cbreak();
-    noecho();
 
-    if (has_colors()) {
+    if (COLOR_ENABLED && has_colors()) {
         start_color();
-        init_pair(BLUE_ON_WHITE, COLOR_BLACK, COLOR_WHITE);
-        init_pair(RED_ON_WHITE, COLOR_BLACK, COLOR_WHITE);
+        init_pair(BLACK_ON_WHITE, COLOR_BLACK, COLOR_WHITE);
+        init_pair(BLUE_ON_WHITE, COLOR_BLUE, COLOR_WHITE);
+        init_pair(RED_ON_WHITE, COLOR_RED, COLOR_WHITE);
         bkgd(COLOR_PAIR(RED_ON_WHITE));
     }
+
+    cbreak();
+    noecho();
 
     while (1) {
         int size = (COLS / 2 < LINES ? COLS / 2 : LINES) * 9 / 20;
@@ -64,11 +67,11 @@ int main()
         }
         drawLineAtAngle(COLS / 2, LINES / 2, second_of_minute, size * 9 / 10, drawHandDot);
         drawLineAtAngle(COLS / 2, LINES / 2, minute_of_hour, size * 9 / 10, drawHandDot);
-//         attroff(COLOR_PAIR(BLUE_ON_WHITE));
+        attroff(COLOR_PAIR(BLUE_ON_WHITE));
 
         attron(COLOR_PAIR(RED_ON_WHITE));
         drawLineAtAngle(COLS / 2, LINES / 2, hour_of_half_day, size * 2 / 3, drawHandDot);
-//         attroff(COLOR_PAIR(RED_ON_WHITE));
+        attroff(COLOR_PAIR(RED_ON_WHITE));
 
         mvaddch(LINES - 1, 0, '-');
         refresh();
