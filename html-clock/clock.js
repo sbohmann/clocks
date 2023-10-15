@@ -26,22 +26,24 @@ class Clock extends HTMLElement {
         this.#handsCanvas.id = 'hands-canvas'
         this.appendChild(this.#handsCanvas)
         this.requestRefresh()
-        window.onresize = () => this.requestRefresh()
+        window.onresize = () => this.refreshCanvas()
     }
 
     requestRefresh() {
         if (!this.#animationFrameRequested) {
             requestAnimationFrame(() => {
+                this.#animationFrameRequested = false
                 this.refreshCanvas()
             })
         }
     }
 
     refreshCanvas() {
-        this.#animationFrameRequested = false
-        let width = this.#handsCanvas.offsetWidth * window.devicePixelRatio
-        let height = this.#handsCanvas.offsetHeight * window.devicePixelRatio
+        console.log(window.devicePixelRatio)
+        let width = Math.round(this.#handsCanvas.offsetWidth * window.devicePixelRatio)
+        let height = Math.round(this.#handsCanvas.offsetHeight * window.devicePixelRatio)
         if (this.#handsCanvas.width !== width || this.#handsCanvas.height !== height) {
+            console.log(`${width}x${height}`)
             this.#handsCanvas.width = width
             this.#handsCanvas.height = height
         }
@@ -71,6 +73,7 @@ class Clock extends HTMLElement {
         let millisecondOfDay = localTimestamp % millisecondsPerDay
 
         if (!sameSize) {
+            console.log("Drawing clock face")
             drawFace()
         }
 
