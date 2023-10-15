@@ -71,7 +71,6 @@ class Clock extends HTMLElement {
         let millisecondOfDay = localTimestamp % millisecondsPerDay
 
         if (!sameSize) {
-            console.log("Drawing face!")
             drawFace()
         }
 
