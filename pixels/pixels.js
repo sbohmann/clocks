@@ -57,7 +57,7 @@ class Pixels extends HTMLElement {
             let r = 250
             let rawOffset = 0
             for (let i = 0; true; ++i) {
-                rawOffset += 2 * i
+                rawOffset += 2 * i - div(4 * i * i * i, 750000)
                 let offset = div(rawOffset, 3 * r / 2)
                 plot(div(w, 2) + i, div(h, 2) - r + offset)
                 plot(div(w, 2) - i, div(h, 2) - r + offset)
