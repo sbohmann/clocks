@@ -21,7 +21,7 @@ class Pixels extends HTMLElement {
         this.#canvas.id = 'face-canvas'
         this.appendChild(this.#canvas)
         this.refreshCanvas()
-        setInterval(() => this.refreshCanvas(), 1000)
+        requestAnimationFrame(() => this.refreshCanvas())
         window.onresize = () => this.refreshCanvas()
     }
 
@@ -42,15 +42,11 @@ class Pixels extends HTMLElement {
         let sameSize = (width === this.#lastWidth && height === this.#lastHeight)
         this.#lastWidth = width
         this.#lastHeight = height
-        const pixelSize = 2
+        const pixelSize = 5
         let w = div(width, pixelSize)
         let h = div(height, pixelSize)
         let centerX = width / 2
         let centerY = height / 2
-
-        let currentDate = new Date()
-        let localTimestamp = currentDate.getTime() -
-            currentDate.getTimezoneOffset() * 60_000
 
         if (!sameSize) {
             context.clearRect(0, 0, width, height)
@@ -58,9 +54,11 @@ class Pixels extends HTMLElement {
         }
 
         function drawContent() {
-            let r = 500
+            let r = 250
+            let rawOffset = 0
             for (let i = 0; true; ++i) {
-                let offset = Math.trunc(i * i / Math.PI / r * 2)
+                rawOffset += 2 * i
+                let offset = div(rawOffset, 3 * r / 2)
                 plot(div(w, 2) + i, div(h, 2) - r + offset)
                 plot(div(w, 2) - i, div(h, 2) - r + offset)
                 plot(div(w, 2) + i, div(h, 2) + r - offset)
